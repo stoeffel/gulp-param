@@ -1,0 +1,30 @@
+{
+  "name": "gulp-param",
+  "version": "0.5.0",
+  "description": "Add params to your tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter min"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/stoeffel/gulp-param"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "stoeffel",
+  "license": "MIT",
+  "bugs": {
+    "url": "http://github.com/stoeffel/gulp-param/issues"
+  },
+  "homepage": "http://github.com/stoeffel/gulp-param",
+  "devDependencies": {
+    "mocha": "~2.0.1",
+    "gulp": "~3.8.10"
+  },
+  "dependencies": {
+    "minimist": "*",
+    "retrieve-arguments": "~1.0.0"
+  }
+}
