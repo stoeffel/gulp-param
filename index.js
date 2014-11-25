@@ -38,7 +38,7 @@ me = function(gulp, processArgv) {
 
 me.getParams = function(argv) {
   var sliceIndex = 3;
-  if (argv[2].startsWith('-')) {
+  if (argv[2] && argv[2].startsWith('-')) {
     sliceIndex = 2;
   }
   return argv.slice(sliceIndex);
