@@ -1,24 +1,25 @@
-var retrieveArguments = require('retrieve-arguments');
+var retrieveArguments = require('retrieve-arguments'),
+    me = {};
 require('./includes-polyfill');
 require('./starts-with-polyfill');
 
-module.exports = function(gulp, processArgv) {
+me = function(gulp, processArgv) {
   var taskFn = gulp.task;
   gulp.argv = processArgv;
 
   gulp.task = function(name, dep, fn) {
     var fnArgs, argv, injections, newFn;
 
-		if (!fn && typeof dep === 'function') {
-			fn = dep;
-			dep = undefined;
-		}
-		dep = dep || [];
-		fn = fn || function () {};
+    if (!fn && typeof dep === 'function') {
+      fn = dep;
+      dep = undefined;
+    }
+    dep = dep || [];
+    fn = fn || function() {};
 
     fnArgs = retrieveArguments(fn);
-    argv = gulp.argv.slice(3);
-    injections = module.exports.getInjections(fnArgs, argv);
+    argv = me.getParams(gulp.argv);
+    injections = me.getInjections(fnArgs, argv);
 
     newFn = function() {
       fn.apply(gulp, injections);
@@ -35,7 +36,15 @@ module.exports = function(gulp, processArgv) {
   return gulp;
 };
 
-module.exports.getInjections = function(fnArgs, keys) {
+me.getParams = function(argv) {
+  var sliceIndex = 3;
+  if (argv[2].startsWith('-')) {
+    sliceIndex = 2;
+  }
+  return argv.slice(sliceIndex);
+};
+
+me.getInjections = function(fnArgs, keys) {
   var injections = [];
 
   for (var i = 0; i < fnArgs.length; i++) {
@@ -45,10 +54,14 @@ module.exports.getInjections = function(fnArgs, keys) {
       continue;
     }
 
-    if (keys.includes('--' + key)) {
-      index = keys.indexOf('--' + key);
+    if (includes(keys, key) || includesShort(keys, key[0])) {
+      if (includes(keys, key)) {
+        index = keys.indexOf('--' + key);
+      } else {
+        index =  keys.indexOf('-' + key[0]);
+      }
       next = keys[index + 1];
-      if (next && !next.startsWith('--')) {
+      if (next && !next.startsWith('-')) {
         injections.push(next);
       } else {
         injections.push(true);
@@ -59,3 +72,13 @@ module.exports.getInjections = function(fnArgs, keys) {
   }
   return injections;
 };
+
+function includes(keys, key) {
+  return keys.includes('--' + key);
+}
+
+function includesShort(keys, key) {
+  return keys.includes('-' + key[0]);
+}
+
+module.exports = me;

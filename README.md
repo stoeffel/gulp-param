@@ -27,3 +27,9 @@ Usage
 
   // $ gulp build --debug --version v1.0.0
 ```
+
+It allows the use of shorthand params, but it may cause collisions.
+
+```bash
+  $ gulp build -d --version v1.0.0 # -d === --debug
+```

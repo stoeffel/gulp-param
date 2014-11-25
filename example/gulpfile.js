@@ -1,18 +1,20 @@
-// $ gulp test --p3 foo --p2 moo --p1 blup
+// $ gulp test --foo foo --moo moo -b blup
 var gulpParam = require('../index.js'),
   gulp = gulpParam(require('gulp'), process.argv);
 
-gulp.task('dep', function(p3, p1) {
-  console.log(p3);
-  console.log(p1);
+gulp.task('dep', function(foo, moo) {
+  console.log(foo);
+  console.log(moo);
 });
 
-gulp.task('dep2', function(p3, p2) {
-  console.log(p3);
-  console.log(p2);
+gulp.task('dep2', function(foo, blup) {
+  console.log(foo);
+  console.log(blup);
 });
 
-gulp.task('test', ['dep', 'dep2'], function(p2, p1) {
-  console.log(p1);
-  console.log(p2);
+gulp.task('test', ['dep', 'dep2'], function(blup, moo) {
+  console.log(moo);
+  console.log(blup);
 });
+
+gulp.task('default', ['test', 'dep']);
