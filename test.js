@@ -33,7 +33,7 @@ describe('gulp-param', function() {
     });
   });
 
-  describe('#getInjections', function() {
+  describe('#task', function() {
 
     it('should run the task', function(done) {
       gulp.task('test', function() {
