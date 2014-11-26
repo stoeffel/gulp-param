@@ -25,11 +25,8 @@ me = function(gulp, processArgv) {
       fn.apply(gulp, injections);
     };
 
-    if (!dep) {
-      taskFn.call(gulp, name, newFn);
-    } else {
-      taskFn.call(gulp, name, dep, newFn);
-    }
+    taskFn.call(gulp, name, dep, newFn);
+     
     return gulp;
   };
 
