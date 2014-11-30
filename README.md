@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/stoeffel/gulp-param.svg)](https://travis-ci.org/stoeffel/gulp-param)
+
 gulp-param
 ==========
 
