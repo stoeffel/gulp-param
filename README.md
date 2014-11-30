@@ -20,16 +20,16 @@ Usage
     console.log(debug); // => true
   });
 
-  gulp.task('build', ['dep'], function(debug, version) {
+  gulp.task('build', ['dep'], function(debug, tag) {
     console.log(debug); // => true
-    console.log(version); // => 'v1.0.0'
+    console.log(tag); // => 'v1.0.0'
   });
 
-  // $ gulp build --debug --version v1.0.0
+  // $ gulp build --debug --tag v1.0.0
 ```
 
 It allows the use of shorthand params, but it may cause collisions.
 
 ```bash
-  $ gulp build -d --version v1.0.0 # -d === --debug
+  $ gulp build -d --tag v1.0.0 # -d === --debug
 ```
