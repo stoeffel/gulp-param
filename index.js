@@ -25,9 +25,7 @@ me = function(gulp, processArgv) {
       fn.apply(gulp, injections);
     };
 
-    taskFn.call(gulp, name, dep, newFn);
-     
-    return gulp;
+    return taskFn.call(gulp, name, dep, newFn);
   };
 
   return gulp;

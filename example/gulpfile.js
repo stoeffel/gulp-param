@@ -5,6 +5,8 @@ var gulpParam = require('../index.js'),
 gulp.task('dep', function(foo, moo) {
   console.log(foo);
   console.log(moo);
+  if (foo) 
+    console.log('Hello');
 });
 
 gulp.task('dep2', function(foo, blup) {
