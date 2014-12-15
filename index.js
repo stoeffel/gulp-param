@@ -22,7 +22,7 @@ me = function(gulp, processArgv) {
     injections = me.getInjections(fnArgs, argv);
 
     newFn = function() {
-      fn.apply(gulp, injections);
+      return fn.apply(gulp, injections);
     };
 
     return taskFn.call(gulp, name, dep, newFn);
