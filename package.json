@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/stoeffel/gulp-param",
   "devDependencies": {
-    "mocha": "~2.0.1",
-    "gulp": "~3.8.10"
+    "gulp": "^3.9.0",
+    "mocha": "^2.3.0"
   },
   "dependencies": {
     "minimist": "*",
