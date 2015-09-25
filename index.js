@@ -1,7 +1,7 @@
 var retrieveArguments = require('retrieve-arguments'),
     me = {};
 require('./includes-polyfill');
-require('./starts-with-polyfill');
+require('string.prototype.startswith');
 
 me = function(gulp, processArgv) {
   var taskFn = gulp.task;

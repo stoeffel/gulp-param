@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "minimist": "*",
-    "retrieve-arguments": "~1.0.0"
+    "retrieve-arguments": "~1.0.0",
+    "string.prototype.startswith": "^0.2.0"
   }
 }
