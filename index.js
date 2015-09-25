@@ -1,7 +1,7 @@
 var retrieveArguments = require('retrieve-arguments'),
+    startsWith = require('lodash.startswith'),
     me = {};
 require('./includes-polyfill');
-require('./starts-with-polyfill');
 
 me = function(gulp, processArgv) {
   var taskFn = gulp.task;
@@ -33,7 +33,7 @@ me = function(gulp, processArgv) {
 
 me.getParams = function(argv) {
   var sliceIndex = 3;
-  if (argv[2] && argv[2].startsWith('-')) {
+  if (argv[2] && startsWith(argv[2], '-')) {
     sliceIndex = 2;
   }
   return argv.slice(sliceIndex);
@@ -56,7 +56,7 @@ me.getInjections = function(fnArgs, keys) {
         index =  keys.indexOf('-' + key[0]);
       }
       next = keys[index + 1];
-      if (next && !next.startsWith('-')) {
+      if (next && !startsWith(next, '-')) {
         injections.push(next);
       } else {
         injections.push(true);

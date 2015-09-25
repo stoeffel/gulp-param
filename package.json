@@ -28,6 +28,7 @@
     "mocha": "^2.3.0"
   },
   "dependencies": {
+    "lodash.startswith": "^3.0.1",
     "minimist": "*",
     "retrieve-arguments": "~1.0.0"
   }
