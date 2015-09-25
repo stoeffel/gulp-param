@@ -1,7 +1,7 @@
 var retrieveArguments = require('retrieve-arguments'),
     startsWith = require('lodash.startswith'),
+    includes = require('lodash.includes'),
     me = {};
-require('./includes-polyfill');
 
 me = function(gulp, processArgv) {
   var taskFn = gulp.task;
@@ -49,8 +49,8 @@ me.getInjections = function(fnArgs, keys) {
       continue;
     }
 
-    if (includes(keys, key) || includesShort(keys, key[0])) {
-      if (includes(keys, key)) {
+    if (includesKey(keys, key) || includesShort(keys, key[0])) {
+      if (includesKey(keys, key)) {
         index = keys.indexOf('--' + key);
       } else {
         index =  keys.indexOf('-' + key[0]);
@@ -68,12 +68,12 @@ me.getInjections = function(fnArgs, keys) {
   return injections;
 };
 
-function includes(keys, key) {
-  return keys.includes('--' + key);
+function includesKey(keys, key) {
+  return includes(keys, '--' + key);
 }
 
 function includesShort(keys, key) {
-  return keys.includes('-' + key[0]);
+  return includes(keys, '-' + key[0]);
 }
 
 module.exports = me;
