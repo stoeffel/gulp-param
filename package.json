@@ -4,7 +4,10 @@
   "description": "Add params to your tasks",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter min"
+    "test": "mocha --reporter min",
+    "patch-release": "npm version patch && npm publish && git push --follow-tags",
+    "minor-release": "npm version minor && npm publish && git push --follow-tags",
+    "major-release": "npm version major && npm publish && git push --follow-tags"
   },
   "repository": {
     "type": "git",
