@@ -21,7 +21,8 @@ me = function(gulp, processArgv) {
     argv = me.getParams(gulp.argv);
     injections = me.getInjections(fnArgs, argv);
 
-    newFn = function() {
+    newFn = function(done) {
+      injections.push(done);
       return fn.apply(gulp, injections);
     };
 
