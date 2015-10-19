@@ -9,8 +9,8 @@ gulp.task('dep', function(foo, moo) {
     console.log('Hello');
 });
 
-gulp.task('async', function(param1, done) {
-  console.log(param1);
+gulp.task('async', function(foo, done) {
+  console.log(foo);
   setTimeout(function() {
     console.log('in async');
     done();
