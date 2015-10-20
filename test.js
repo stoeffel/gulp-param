@@ -58,6 +58,15 @@ describe('gulp-param', function() {
       });
     });
 
+    it('should pass the callback function as the last parameter', function(done) {
+      gulp.argv = ['', '', '', '--param', 'moo'];
+      gulp.task('test', function(param, callback) {
+        assert.equal(param, 'moo');
+        assert.equal(typeof(callback), 'function');
+        done();
+      });
+    });
+
     it('should pass "null" in the "param"-argument if nothing is passed', function(done) {
       gulp.argv = ['', '', ''];
       gulp.task('test', function(param) {
