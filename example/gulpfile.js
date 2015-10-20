@@ -9,6 +9,14 @@ gulp.task('dep', function(foo, moo) {
     console.log('Hello');
 });
 
+gulp.task('async', function(foo, done) {
+  console.log(foo);
+  setTimeout(function() {
+    console.log('in async');
+    done();
+  }, 1000);
+});
+
 gulp.task('dep2', function(foo, blup) {
   console.log(foo);
   console.log(blup);
