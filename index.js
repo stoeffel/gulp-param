@@ -1,79 +1,49 @@
 var retrieveArguments = require('retrieve-arguments'),
-    startsWith = require('lodash.startswith'),
-    includes = require('lodash.includes'),
-    me = {};
+    includes = require('lodash.includes'), minimist = require('minimist'),
+  stringify = require('node-stringify');
 
-me = function(gulp, processArgv) {
-  var taskFn = gulp.task;
-  gulp.argv = processArgv;
+module.exports = function(gulp, processArgv) {
 
-  gulp.task = function(name, dep, fn) {
-    var fnArgs, argv, injections, newFn;
 
-    if (!fn && typeof dep === 'function') {
-      fn = dep;
-      dep = undefined;
+  var  getInjections = function(functionArguments, parsedCmdArguments, originalCallbackFunction) {
+    var injections = [], callbackinjected = false;
+
+    console.log('getInjections ('+ functionArguments+')('+stringify(parsedCmdArguments)+')');
+    for (var i = 0; i < functionArguments.length; i++) {
+      var functionArgument = functionArguments[i], value = parsedCmdArguments[functionArgument];
+      if(value) {
+        injections.push(value);
+      }
     }
-    dep = dep || [];
-    fn = fn || function() {};
+    return injections;
+  };
+  var wrappedTask = function(taskName, taskDependencies, taskDefinition) {
+    console.log('run task ');
+    var functionArguments, cmdLineArguments, wrappedFunction;
 
-    fnArgs = retrieveArguments(fn);
-    argv = me.getParams(gulp.argv);
-    injections = me.getInjections(fnArgs, argv);
+    if (!taskDefinition && typeof taskDependencies === 'function') {
+      taskDefinition = taskDependencies;
+      taskDependencies = undefined;
+    }
 
-    newFn = function() {
-      return fn.apply(gulp, injections);
+    taskDependencies = taskDependencies || [];
+
+    taskDefinition = taskDefinition || function() {};
+    functionArguments = retrieveArguments(taskDefinition);
+
+    console.log("functionArguments ("+functionArguments+") form "+taskDefinition);
+
+    cmdLineArguments = minimist(processArgv);
+
+    wrappedFunction = function(originalCallbackFunction) {
+      return taskDefinition.apply(gulp, getInjections(functionArguments, cmdLineArguments, originalCallbackFunction));
     };
 
-    return taskFn.call(gulp, name, dep, newFn);
+    return gulp.task.call(gulp, taskName, taskDependencies, wrappedFunction);
   };
 
-  return gulp;
+  var wrappedGulp = {task:wrappedTask};  //should be better
+  wrappedGulp.prototype = gulp;
+
+  return wrappedGulp;
 };
-
-me.getParams = function(argv) {
-  var sliceIndex = 3;
-  if (argv[2] && startsWith(argv[2], '-')) {
-    sliceIndex = 2;
-  }
-  return argv.slice(sliceIndex);
-};
-
-me.getInjections = function(fnArgs, keys) {
-  var injections = [];
-
-  for (var i = 0; i < fnArgs.length; i++) {
-    var key = fnArgs[i],
-      index, next;
-    if (key === 'callback') {
-      continue;
-    }
-
-    if (includesKey(keys, key) || includesShort(keys, key[0])) {
-      if (includesKey(keys, key)) {
-        index = keys.indexOf('--' + key);
-      } else {
-        index =  keys.indexOf('-' + key[0]);
-      }
-      next = keys[index + 1];
-      if (next && !startsWith(next, '-')) {
-        injections.push(next);
-      } else {
-        injections.push(true);
-      }
-    } else {
-      injections.push(null);
-    }
-  }
-  return injections;
-};
-
-function includesKey(keys, key) {
-  return includes(keys, '--' + key);
-}
-
-function includesShort(keys, key) {
-  return includes(keys, '-' + key[0]);
-}
-
-module.exports = me;

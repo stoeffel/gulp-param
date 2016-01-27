@@ -20,8 +20,8 @@
                 "output": "./index.js"
             },
             "test" : {
-                "template": "heinzelmannchen-tpl-node-module/test.js.tpl",
-                "output": "./test.js"
+                "template": "heinzelmannchen-tpl-node-module/gulp_param_spec.js.tpl",
+                "output": "./gulp_param_spec.js"
             },
             "cli" : {
                 "template": "heinzelmannchen-tpl-node-module/cli.js.tpl",
