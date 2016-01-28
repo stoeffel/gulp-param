@@ -31,7 +31,7 @@
     "mocha": "^2.3.0"
   },
   "dependencies": {
-    "lodash.includes": "^3.1.3",
+    "lodash.includes": "^4.0.0",
     "lodash.startswith": "^3.0.1",
     "minimist": "*",
     "retrieve-arguments": "~1.0.0"
