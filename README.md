@@ -1,6 +1,6 @@
 gulp-param
 ==========
-[![Build Status](https://travis-ci.org/stoeffel/gulp-param.svg)](https://travis-ci.org/stoeffel/gulp-param) [![npm version](https://badge.fury.io/js/gulp-param.svg)](http://badge.fury.io/js/gulp-param)
+[![Build Status](https://travis-ci.org/przemcio/gulp-param.svg?branch=master)](https://travis-ci.org/przemciol/gulp-param)
 
 > Add params to your tasks
 
