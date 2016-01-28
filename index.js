@@ -12,9 +12,9 @@ module.exports = function (gulp, processArgv, callbackFunctionName) {
       var functionArgument = functionArguments[i], value = parsedCmdArguments[functionArgument];
       if (value) {
         arguments.push(value);
-      } else if (functionArgument === callbackFunctionName) {
+      } else if (functionArgument === (callbackFunctionName || "callback")) {
         arguments.push(originalCallbackFunction);
-      }
+      } else {arguments.push(undefined);}
     }
     return arguments;
   };
@@ -26,10 +26,10 @@ module.exports = function (gulp, processArgv, callbackFunctionName) {
     }
     taskDefinition = taskDefinition || function () {};
 
-    var wrappedFunction = function (originalCallbackFunction) {
+    var wrappedTaskFunction = function (originalCallbackFunction) {
       return taskDefinition.apply(gulp, prepareArgumentsArray(retrieveArguments(taskDefinition), originalCallbackFunction));
     };
-    return gulp.task.call(gulp, taskName, taskDependencies || [], wrappedFunction);
+    return gulp.task.call(gulp, taskName, taskDependencies || [], wrappedTaskFunction);
   };
 
   var wrappedGulp = {task: wrappedTask};  //should be better
