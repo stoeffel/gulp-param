@@ -32,7 +32,7 @@ module.exports = function (gulp, processArgv, callbackFunctionName) {
     return gulp.task.call(gulp, taskName, taskDependencies || [], wrappedTaskFunction);
   };
 
-  var wrappedGulp = {task: wrappedTask};  //should be better
+  var wrappedGulp = {task: wrappedTask};
   wrappedGulp.prototype = gulp;
   wrappedGulp.constructor = gulp.constructor;
   return wrappedGulp;

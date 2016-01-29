@@ -1,4 +1,4 @@
-// $ gulp test --foo foo --moo moo -b blup
+// $ gulp test --foo foo --moo moo --blup
 var gulpParam = require('../index.js'),
   gulp = gulpParam(require('gulp'), process.argv);
 
@@ -9,9 +9,10 @@ gulp.task('dep', function(foo, moo) {
     console.log('Hello');
 });
 
-gulp.task('dep2', function(foo, blup) {
+gulp.task('dep2', function(foo, blup, callback) {
   console.log(foo);
   console.log(blup);
+  callback();
 });
 
 gulp.task('test', ['dep', 'dep2'], function(blup, moo) {
@@ -19,4 +20,4 @@ gulp.task('test', ['dep', 'dep2'], function(blup, moo) {
   console.log(blup);
 });
 
-gulp.task('default', ['test', 'dep']);
+gulp.task('default', ['test']);
