@@ -1,79 +1,39 @@
-var retrieveArguments = require('retrieve-arguments'),
-    startsWith = require('lodash.startswith'),
-    includes = require('lodash.includes'),
-    me = {};
+var retrieveArguments = require('retrieve-arguments'), minimist = require('minimist'),
+  stringify = require('node-stringify'), debug = require('debug')('gulp-param');
 
-me = function(gulp, processArgv) {
-  var taskFn = gulp.task;
-  gulp.argv = processArgv;
+module.exports = function (gulp, processArgv, callbackFunctionName) {
+  var parsedCmdArguments = minimist(processArgv);
+  var prepareArgumentsArray = function (functionArguments, originalCallbackFunction) {
+    var arguments = [];
+    debug('prepare argument base on function arguments (%s) and parsed commandline (%s)',
+      functionArguments, stringify(parsedCmdArguments));
 
-  gulp.task = function(name, dep, fn) {
-    var fnArgs, argv, injections, newFn;
-
-    if (!fn && typeof dep === 'function') {
-      fn = dep;
-      dep = undefined;
+    for (var i = 0; i < functionArguments.length; i++) {
+      var functionArgument = functionArguments[i], value = parsedCmdArguments[functionArgument];
+      if (value) {
+        arguments.push(value);
+      } else if (functionArgument === (callbackFunctionName || "callback")) {
+        arguments.push(originalCallbackFunction);
+      } else {arguments.push(undefined);}
     }
-    dep = dep || [];
-    fn = fn || function() {};
-
-    fnArgs = retrieveArguments(fn);
-    argv = me.getParams(gulp.argv);
-    injections = me.getInjections(fnArgs, argv);
-
-    newFn = function() {
-      return fn.apply(gulp, injections);
-    };
-
-    return taskFn.call(gulp, name, dep, newFn);
+    return arguments;
   };
 
-  return gulp;
-};
-
-me.getParams = function(argv) {
-  var sliceIndex = 3;
-  if (argv[2] && startsWith(argv[2], '-')) {
-    sliceIndex = 2;
-  }
-  return argv.slice(sliceIndex);
-};
-
-me.getInjections = function(fnArgs, keys) {
-  var injections = [];
-
-  for (var i = 0; i < fnArgs.length; i++) {
-    var key = fnArgs[i],
-      index, next;
-    if (key === 'callback') {
-      continue;
+  var wrappedTask = function (taskName, taskDependencies, taskDefinition) {
+    if (!taskDefinition && typeof taskDependencies === 'function') {
+      taskDefinition = taskDependencies;
+      taskDependencies = undefined;
     }
+    taskDefinition = taskDefinition || function () {};
 
-    if (includesKey(keys, key) || includesShort(keys, key[0])) {
-      if (includesKey(keys, key)) {
-        index = keys.indexOf('--' + key);
-      } else {
-        index =  keys.indexOf('-' + key[0]);
-      }
-      next = keys[index + 1];
-      if (next && !startsWith(next, '-')) {
-        injections.push(next);
-      } else {
-        injections.push(true);
-      }
-    } else {
-      injections.push(null);
-    }
-  }
-  return injections;
+    var wrappedTaskFunction = function (originalCallbackFunction) {
+      return taskDefinition.apply(gulp, prepareArgumentsArray(retrieveArguments(taskDefinition), originalCallbackFunction));
+    };
+    return gulp.task.call(gulp, taskName, taskDependencies || [], wrappedTaskFunction);
+  };
+
+  var wrappedGulp = {task: wrappedTask};
+  wrappedGulp.prototype = gulp;
+  wrappedGulp.constructor = gulp.constructor;
+  return wrappedGulp;
 };
-
-function includesKey(keys, key) {
-  return includes(keys, '--' + key);
-}
-
-function includesShort(keys, key) {
-  return includes(keys, '-' + key[0]);
-}
-
-module.exports = me;
