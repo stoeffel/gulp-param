@@ -95,5 +95,11 @@ describe('gulp-param', function () {
       });
     });
 
+    it('should not remove any other function of gulp', function () {
+
+      var gulp = gulpParam(new MockGulp(), ['', '', '', '--p2', 'p2']);
+      expect(gulp.src('yes')).to.be.equal('yes');
+    });
+
   });
 });
