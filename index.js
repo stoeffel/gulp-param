@@ -19,6 +19,7 @@ module.exports = function (gulp, processArgv, callbackFunctionName) {
     return arguments;
   };
 
+  var origTask = gulp.task;
   var wrappedTask = function (taskName, taskDependencies, taskDefinition) {
     if (!taskDefinition && typeof taskDependencies === 'function') {
       taskDefinition = taskDependencies;
@@ -29,11 +30,11 @@ module.exports = function (gulp, processArgv, callbackFunctionName) {
     var wrappedTaskFunction = function (originalCallbackFunction) {
       return taskDefinition.apply(gulp, prepareArgumentsArray(retrieveArguments(taskDefinition), originalCallbackFunction));
     };
-    return gulp.task.call(gulp, taskName, taskDependencies || [], wrappedTaskFunction);
+    return origTask.call(gulp, taskName, taskDependencies || [], wrappedTaskFunction);
   };
 
-  var wrappedGulp = {task: wrappedTask};
-  wrappedGulp.prototype = gulp;
-  wrappedGulp.constructor = gulp.constructor;
-  return wrappedGulp;
+
+  gulp.task = wrappedTask;
+
+  return gulp;
 };
