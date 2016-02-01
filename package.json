@@ -1,6 +1,6 @@
 {
   "name": "gulp-param",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Add params to your tasks",
   "main": "index.js",
   "scripts": {
