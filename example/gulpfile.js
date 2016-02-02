@@ -1,7 +1,8 @@
 // $ gulp test --foo foo --moo moo --blup
 var gulpParam = require('../index.js'),
   uglify = require('gulp-uglify'),
-  gulp = gulpParam(require('gulp'), process.argv);
+  origGulp = require('gulp'),
+  gulp = gulpParam(origGulp, process.argv);
 
 gulp.task('dep', function(foo, moo) {
   console.log(foo);
@@ -27,4 +28,5 @@ gulp.task('test', ['dep', 'dep2'], function(blup, moo) {
   console.log(blup);
 });
 
+console.log(gulp === origGulp)
 gulp.task('default', ['test']);

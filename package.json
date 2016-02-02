@@ -37,8 +37,9 @@
   },
   "dependencies": {
     "debug": "^2.2.0",
-    "node-stringify": "0.0.19",
+    "lodash.assignin": "^4.0.1",
     "minimist": "*",
+    "node-stringify": "0.0.19",
     "retrieve-arguments": "~1.0.0"
   }
 }
