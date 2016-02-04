@@ -36,9 +36,9 @@
     "mocha": "^2.3.0"
   },
   "dependencies": {
-    "lodash": "^4.2.0",
     "minimist": "*",
     "object-assign": "^4.0.1",
+    "ramda": "^0.19.1",
     "retrieve-arguments": "~1.0.0"
   }
 }

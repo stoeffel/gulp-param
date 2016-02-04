@@ -1,14 +1,7 @@
-var retrieveArguments = require('retrieve-arguments'), minimist = require('minimist'),
-  _ =require('lodash');
+var retrieveArguments = require('retrieve-arguments'), minimist = require('minimist'), R = require('ramda');
 
-module.exports = function (gulp, processArgv, cf) {
-  var parsedCmdArguments = minimist(processArgv);
-  var pp =  (cf || "callback");
-  var prepareArgumentsArray = function (functionArguments, cmdArguments) {
-    return _.map(functionArguments,function(fa) {
-      return cmdArguments[fa];
-    });
-  };
+module.exports = function (gulp, processArgv, callbackName) {
+  var cmdArgs = minimist(processArgv);
   var wrappedTask = function (taskName, taskDependencies, taskDefinition) {
     if (!taskDefinition && typeof taskDependencies === 'function') {
       taskDefinition = taskDependencies;
@@ -17,11 +10,11 @@ module.exports = function (gulp, processArgv, cf) {
     taskDefinition = taskDefinition || function () {};
 
     var wrappedTaskFunction = function (originalCallbackFunction) {
-      return taskDefinition.apply(gulp,
-        prepareArgumentsArray(retrieveArguments(taskDefinition), _.assign(
-          _.fromPairs([[pp,originalCallbackFunction]]),parsedCmdArguments)));
+      var cmdArgsMap = R.merge(R.objOf(callbackName || "callback")(originalCallbackFunction) , cmdArgs);
+      var mapFunctionParameters = R.map(function (fnArgument) { return cmdArgsMap[fnArgument];});
+      return taskDefinition.apply(gulp, mapFunctionParameters(retrieveArguments(taskDefinition)));
     };
     return gulp.task.call(gulp, taskName, taskDependencies || [], wrappedTaskFunction);
   };
-  return _.assignIn({}, gulp, { task: wrappedTask });
+  return R.merge(R.clone(gulp),{task: wrappedTask});
 };
