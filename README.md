@@ -2,9 +2,14 @@ gulp-param
 ==========
 [![Build Status](https://travis-ci.org/stoeffel/gulp-param.svg)](https://travis-ci.org/stoeffel/gulp-param) [![npm version](https://badge.fury.io/js/gulp-param.svg)](http://badge.fury.io/js/gulp-param)
 
-> Plugin injects arguments from the command line into your tasks.
+> It automatically injects commandline arguments into a gulp's task definition arguments.
 
-Please use wrapped instance of gulp to have inject feature available.
+It accepts parameters after '--'. Parameters without any value will be treated as boolean flag. 
+
+```
+gulp build  --myparam 123 --booleanParam
+```
+
 
 Installation
 ------------
@@ -31,7 +36,7 @@ API
 
 ### constructor(gulp, cmdArgs, gulpCallbackName): gulp
 
-- `gulp` an instance of gulp.
+- `gulp` a instance of gulp.
 - `cmdArgs` arguments from command line. In most cases it would be `process.argv`
 - `gulpCallbackName` name of methodargument which will be use to inject async gulp callback. It is an option parameter. If you not defined it a default value would be set to `callback`
 - returns wrapped gulp instance with enabled param injection.
