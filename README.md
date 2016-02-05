@@ -1,6 +1,8 @@
 gulp-param
 ==========
-[![Build Status](https://travis-ci.org/stoeffel/gulp-param.svg)](https://travis-ci.org/stoeffel/gulp-param) [![npm version](https://badge.fury.io/js/gulp-param.svg)](http://badge.fury.io/js/gulp-param)
+[![Build Status](https://travis-ci.org/stoeffel/gulp-param.svg)](https://travis-ci.org/stoeffel/gulp-param) [![npm version](https://badge.fury.io/js/gulp-param.svg)](http://badge.fury.io/js/gulp-param) [![dependecies](https://david-dm.org/stoeffel/gulp-param.svg)](https://david-dm.org/stoeffel/gulp-param.svg)
+
+
 
 > It automatically injects commandline arguments into a gulp's task definition arguments.
 
