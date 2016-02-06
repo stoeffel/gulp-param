@@ -1,6 +1,9 @@
 gulp-param
 ==========
-[![Build Status](https://travis-ci.org/stoeffel/gulp-param.svg)](https://travis-ci.org/stoeffel/gulp-param) [![npm version](https://badge.fury.io/js/gulp-param.svg)](http://badge.fury.io/js/gulp-param) [![dependecies](https://david-dm.org/stoeffel/gulp-param.svg)](https://david-dm.org/stoeffel/gulp-param.svg)
+[![Build Status](https://travis-ci.org/stoeffel/gulp-param.svg)](https://travis-ci.org/stoeffel/gulp-param)
+[![npm version](https://badge.fury.io/js/gulp-param.svg)](http://badge.fury.io/js/gulp-param)
+[![dependecies](https://david-dm.org/stoeffel/gulp-param.svg)](https://david-dm.org/stoeffel/gulp-param.svg)
+[![codecov.io](https://codecov.io/github/stoeffel/gulp-param/coverage.svg?branch=master)](https://codecov.io/github/stoeffel/gulp-param?branch=master)
 
 
 
