@@ -4,7 +4,8 @@
   "description": "Add params to your tasks",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
+    "codecov": "npm run test && codecov",
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
     "minor-release": "npm version minor && npm publish && git push --follow-tags",
     "major-release": "npm version major && npm publish && git push --follow-tags"
@@ -31,9 +32,12 @@
   "homepage": "https://github.com/stoeffel/gulp-param",
   "devDependencies": {
     "chai": "^3.4.1",
+    "codecov": "^1.0.1",
     "gulp": "^3.9.0",
     "gulp-uglify": "^1.5.1",
-    "mocha": "^2.3.0"
+    "istanbul": "^0.4.2",
+    "mocha": "^2.3.0",
+    "mocha-lcov-reporter": "^1.0.0"
   },
   "dependencies": {
     "minimist": "*",
