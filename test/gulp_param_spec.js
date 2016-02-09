@@ -101,5 +101,11 @@ describe('gulp-param', function () {
       expect(gulp.src('yes')).to.be.equal('yes');
     });
 
+    it('should use a empty task if none defined', function () {
+
+      var gulp = gulpParam(new MockGulp(), ['', '', '', '--p2', 'p2']);
+      gulp.task('test');
+    });
+
   });
 });
