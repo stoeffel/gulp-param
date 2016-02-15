@@ -101,10 +101,21 @@ describe('gulp-param', function () {
       expect(gulp.src('yes')).to.be.equal('yes');
     });
 
-    it('should use a empty task if none defined', function () {
+    it('should use an empty task if none defined', function () {
 
       var gulp = gulpParam(new MockGulp(), ['', '', '', '--p2', 'p2']);
       gulp.task('test');
+    });
+
+   it('should use an empty task if none defined but dependency array is defined', function () {
+
+      var gulp = gulpParam(new MockGulp(), ['', '', '', '--p2', 'p2']);
+
+      gulp.task('test1', function(){
+        console.log('do test 1');
+      });
+
+      gulp.task('test',['test1']);
     });
 
   });
