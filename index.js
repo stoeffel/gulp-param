@@ -2,8 +2,6 @@ var retrieveArguments = require('retrieve-arguments'),
   minimist = require('minimist'),
   R = require('ramda');
 
-var noop = function() {};
-
 module.exports = function (gulp, processArgv, callbackName) {
   var mergeCmdArgs = R.compose(
     R.merge(R.__, minimist(processArgv)),
@@ -14,7 +12,7 @@ module.exports = function (gulp, processArgv, callbackName) {
     var task = R.ifElse(
       R.is(Function),
       R.identity,
-      R.always(R.or(taskDefinition, noop))
+      R.always(R.or(taskDefinition, function() {}))
     )(taskDependencies);
 
     var wrappedTaskFunction = function (originalCallbackFunction) {
