@@ -9,21 +9,21 @@ module.exports = function (gulp, processArgv, callbackName) {
   );
 
   var wrappedTask = function (taskName, taskDependencies, taskDefinition) {
-    if (!taskDefinition && R.is(Function, taskDependencies)) {
-      taskDefinition = taskDependencies;
-      taskDependencies = undefined;
-    }
-    taskDefinition = taskDefinition || function () {
-      };
+    var task = R.ifElse(
+      R.is(Function),
+      R.identity,
+      R.always(R.or(taskDefinition, function() {}))
+    )(taskDependencies);
+
     var wrappedTaskFunction = function (originalCallbackFunction) {
       var cmdArgsMap = mergeCmdArgs(originalCallbackFunction);
       return R.compose(
         function (args) {
-          return taskDefinition.apply(gulp, args);
+          return task.apply(gulp, args);
         },
         R.map(R.prop(R.__, cmdArgsMap)),
         retrieveArguments
-      )(taskDefinition);
+      )(task);
     };
     return gulp.task.call(gulp, taskName, taskDependencies || [], wrappedTaskFunction);
   };

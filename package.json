@@ -4,7 +4,7 @@
   "description": "Add params to your tasks",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly --report html -- -R spec",
     "codecov": "npm run test && codecov",
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
     "minor-release": "npm version minor && npm publish && git push --follow-tags",
