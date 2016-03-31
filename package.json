@@ -42,7 +42,7 @@
   "dependencies": {
     "minimist": "*",
     "object-assign": "^4.0.1",
-    "ramda": "^0.19.1",
+    "ramda": "^0.20.1",
     "retrieve-arguments": "~1.0.0"
   }
 }
