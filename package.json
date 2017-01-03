@@ -34,15 +34,15 @@
     "chai": "^3.4.1",
     "codecov": "^1.0.1",
     "gulp": "^3.9.0",
-    "gulp-uglify": "^1.5.1",
+    "gulp-uglify": "^2.0.0",
     "istanbul": "^0.4.2",
-    "mocha": "^2.3.0",
+    "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^1.0.0"
   },
   "dependencies": {
     "minimist": "*",
     "object-assign": "^4.0.1",
-    "ramda": "^0.21.0",
+    "ramda": "^0.23.0",
     "retrieve-arguments": "~1.0.0"
   }
 }
