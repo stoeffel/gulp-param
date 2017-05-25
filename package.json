@@ -32,9 +32,9 @@
   "homepage": "https://github.com/stoeffel/gulp-param",
   "devDependencies": {
     "chai": "^3.4.1",
-    "codecov": "^1.0.1",
+    "codecov": "^2.2.0",
     "gulp": "^3.9.0",
-    "gulp-uglify": "^2.0.0",
+    "gulp-uglify": "^3.0.0",
     "istanbul": "^0.4.2",
     "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^1.0.0"
