@@ -25,7 +25,16 @@ module.exports = function (gulp, processArgv, callbackName) {
         retrieveArguments
       )(task);
     };
-    return gulp.task.call(gulp, taskName, taskDependencies || [], wrappedTaskFunction);
+
+    var wrappedFunctionWithDependencies = (function (taskDependencies, wrappedTaskFunction) {
+      if (Array.isArray(taskDependencies)) {
+        return gulp.series(taskDependencies, wrappedTaskFunction);
+      } else {
+        return wrappedTaskFunction;
+      }
+    })(taskDependencies, wrappedTaskFunction);
+
+    return gulp.task.call(gulp, taskName, wrappedFunctionWithDependencies);
   };
   return R.merge(R.clone(gulp), {task: wrappedTask});
 };
